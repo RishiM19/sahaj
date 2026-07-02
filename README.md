@@ -6,6 +6,8 @@ A proactive financial intelligence system for the ~450 million Indians the forma
 
 Built by Krutika Wagh and Rishi Mahajan (VESIT, Chembur) for Nomura Kakushin 2026.
 
+**New here, or picking this back up after a while?** [`docs/CONTEXT.md`](docs/CONTEXT.md) is the one-file version of everything — the pitch, the architecture, exactly what's built versus designed-only, and how to get it running again from a clean machine.
+
 ## Why this exists
 
 Read [`docs/PROBLEM.md`](docs/PROBLEM.md) for the full brief, but in short: account ownership in India is basically solved (PMJDY, UPI). Being *served* by the system is a different problem, and it's the one nobody's building for. A Swiggy driver with no salary slip, a schoolteacher sold a ULIP instead of an SIP, a farmer who knows the Kisan Credit Card exists but can't read the form, a visually impaired writer locked out of every mainstream finance app — none of that is an edge case. SAHAJ exists because no system has ever modelled who these people actually are.
@@ -17,7 +19,7 @@ Read [`docs/PROBLEM.md`](docs/PROBLEM.md) for the full brief, but in short: acco
 | [`backend/`](backend/) | FastAPI service: the LangGraph orchestrator, ten specialist agents on a shared blackboard, the Behavioral Financial Twin (Neo4j), Progressive Trust Protocol gating, and the channel adapters (chat/WhatsApp-style, USSD simulator). |
 | [`frontend/`](frontend/) | React + TypeScript PWA — a WhatsApp-style chat tier and a `*99#` USSD simulator tier, built against the same backend API. |
 | [`infra/`](infra/) | `docker-compose.yml` bringing up every self-hosted piece of the stack (Neo4j, MongoDB, Redis, Qdrant, Ollama) with one command. |
-| [`docs/`](docs/) | Architecture, the tech-stack decisions and why, the build roadmap, the agent roster, and the Progressive Trust Protocol spec. |
+| [`docs/`](docs/) | Architecture, the tech-stack decisions and why, the build roadmap, the agent roster, and the Progressive Trust Protocol spec. Start with [`docs/CONTEXT.md`](docs/CONTEXT.md) if you want the whole picture in one file. |
 
 ## Quick start
 
