@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+*.local
+*.tsbuildinfo
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Docker volumes / data
+infra/data/
+infra/.ollama/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.log
+
+# local tooling config
+.claude/
+
+# Build artifacts
+frontend/build/
+backend/.coverage

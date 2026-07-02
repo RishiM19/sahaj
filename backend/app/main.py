@@ -1,0 +1,44 @@
+from __future__ import annotations
+
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.channels import chat, ussd
+from app.db import cfti
+from app.db.clients import close_all, get_neo4j, get_pg_pool
+from app.orchestrator.graph import Orchestrator
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    neo4j_driver = get_neo4j()
+    pg_pool = await get_pg_pool()
+    await cfti.ensure_schema(pg_pool)
+
+    orchestrator = Orchestrator(neo4j_driver, pg_pool)
+    await orchestrator.bft.ensure_schema()
+    app.state.orchestrator = orchestrator
+
+    yield
+
+    await close_all()
+
+
+app = FastAPI(title="SAHAJ", lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(chat.router)
+app.include_router(ussd.router)
+
+
+@app.get("/api/health")
+async def health():
+    return {"status": "ok"}

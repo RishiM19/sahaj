@@ -1,0 +1,18 @@
+{
+  "_comment": "Demo seed only - a handful of real RBI-registered NBFC/lender names so Scam Guard has something real to match against, plus obviously-fake entries used in the golden-path demo. Not a live RBI feed.",
+  "registered_lenders": [
+    "Bajaj Finserv",
+    "HDFC Credila",
+    "Tata Capital",
+    "L&T Finance",
+    "Muthoot Finance",
+    "Cholamandalam Investment and Finance",
+    "IIFL Finance",
+    "Aditya Birla Finance",
+    "Shriram Finance",
+    "Poonawalla Fincorp",
+    "Kisan Credit Card",
+    "PM-KISAN",
+    "Fasal Bima Yojana"
+  ]
+}
