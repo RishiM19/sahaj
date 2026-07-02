@@ -13,15 +13,21 @@ import json
 import asyncpg
 from langgraph.graph import END, START, StateGraph
 from neo4j import AsyncDriver
+from qdrant_client import AsyncQdrantClient
 
 from app.agents.base import Agent, Observation, TurnContext
 from app.agents.cash_flow import CashFlowAgent
+from app.agents.community_intelligence import CommunityIntelligenceAgent
+from app.agents.crisis_intercept import CrisisInterceptAgent
 from app.agents.financial_psyche import FinancialPsycheAgent
+from app.agents.learning_literacy import LearningLiteracyAgent
 from app.agents.life_simulator import LifeSimulatorAgent
 from app.agents.scam_guard import ScamGuardAgent
+from app.agents.scheme_navigator import SchemeNavigatorAgent
 from app.bft.service import BFTService
 from app.llm.client import LLMClient
 from app.orchestrator.state import TurnState
+from app.rag.schemes import SchemeIndex
 from app.trust.ptp import agent_allowed, max_response_depth
 
 _COMPOSE_SYSTEM = """You are SAHAJ, a financial assistant for Indian users the formal system
@@ -48,7 +54,11 @@ def _bft_lines(bft) -> str:
 
 class Orchestrator:
     def __init__(
-        self, neo4j_driver: AsyncDriver, pg_pool: asyncpg.Pool, llm: LLMClient | None = None
+        self,
+        neo4j_driver: AsyncDriver,
+        pg_pool: asyncpg.Pool,
+        qdrant: AsyncQdrantClient,
+        llm: LLMClient | None = None,
     ) -> None:
         self.llm = llm or LLMClient()
         self.bft = BFTService(neo4j_driver)
@@ -57,6 +67,10 @@ class Orchestrator:
             ScamGuardAgent(self.llm, pg_pool),
             CashFlowAgent(),
             LifeSimulatorAgent(self.llm),
+            SchemeNavigatorAgent(SchemeIndex(qdrant)),
+            CrisisInterceptAgent(),
+            CommunityIntelligenceAgent(pg_pool),
+            LearningLiteracyAgent(self.llm),
         ]
         self._graph = self._build_graph()
 

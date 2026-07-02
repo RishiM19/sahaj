@@ -4,11 +4,13 @@ Data is earned, not demanded. Every level unlocks more only after the user has a
 
 | Level | Data given | What unlocks | Agents unlocked |
 |---|---|---|---|
-| 0 | Nothing | Regional scam alerts and area threat reports. No sign-up; full CFTI benefit with zero personal data. | Scam Guard, Community Intelligence |
-| 1 | Phone + name | Personalised scheme eligibility, basic guidance. | + Scheme Navigator, Learning & Literacy |
-| 2 | Income range | Cash-flow projections, behavioral nudges, deficit warnings. | + Cash Flow, Financial Psyche (full depth) |
-| 3 | UPI consent (Account Aggregator) | Transaction monitoring, proactive distress detection. | + Life Simulator (real transaction data instead of declared income) |
-| 4 | DigiLocker | Full scheme enrollment, credit-building, life simulations against verified documents. | + Document Assist, Crisis Intercept human handoff |
+| 0 | Nothing | Regional scam alerts, area threat reports, and the crisis safety net. No sign-up; full CFTI benefit with zero personal data. | Financial Psyche, Scam Guard, Crisis Intercept, Community Intelligence |
+| 1 | Phone + name | Personalised scheme eligibility, just-in-time explanations. | + Scheme Navigator, Learning & Literacy |
+| 2 | Income range | Cash-flow projections, deficit warnings, life simulations. | + Cash Flow, Life Simulator |
+| 3 | UPI consent (Account Aggregator) | Transaction monitoring, proactive distress detection - upgrades Cash Flow/Life Simulator from self-declared income to verified transaction data rather than unlocking a new agent. | *(upgrade, not a new agent - see Phase 2 roadmap)* |
+| 4 | DigiLocker | Full scheme enrollment, credit-building, document-verified form-filling. | + Document Assist |
+
+Crisis Intercept deliberately never requires more than Level 0 to *detect* a crisis and surface it — nobody loses the safety net for having shared less data. What Level 3+ actually gates in production is the human-handoff *fulfillment* (routing to a real advisor needs a verified way to follow up), not the detection itself; the Phase 1/2 implementation only covers detection.
 
 ## How this is enforced in code
 

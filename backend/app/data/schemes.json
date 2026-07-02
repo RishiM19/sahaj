@@ -1,0 +1,185 @@
+{
+  "_comment": "Real Indian government schemes, hand-curated as a seed set for the Scheme Navigator RAG index. Not exhaustive (docs/ROADMAP.md tracks growing this toward 400+) - covers the categories the four personas actually need: farm credit, gig/informal income, tax-saving, insurance, disability, and women/child savings.",
+  "schemes": [
+    {
+      "id": "kisan-credit-card",
+      "name": "Kisan Credit Card (KCC)",
+      "category": "farm_credit",
+      "benefit": "Short-term credit for crop production and allied activities at a subsidised interest rate (as low as 4% p.a. with prompt repayment, after interest subvention).",
+      "eligibility": "Any farmer - owner-cultivator, tenant farmer, sharecropper - including those with small/marginal holdings.",
+      "description": "A revolving credit line against farmland, meant to replace informal moneylenders for input costs (seed, fertiliser, labour) each sowing season. Issued by nationalised banks, regional rural banks, and cooperative banks.",
+      "apply_via": "Nearest bank branch or Common Service Centre; Aadhaar and land records required."
+    },
+    {
+      "id": "pm-kisan",
+      "name": "PM-KISAN (Pradhan Mantri Kisan Samman Nidhi)",
+      "category": "farm_income_support",
+      "benefit": "₹6,000/year paid in three equal instalments directly to the farmer's bank account.",
+      "eligibility": "All landholding farmer families, subject to exclusion criteria (institutional landholders, income-tax payers, and a few other categories).",
+      "description": "Direct income support to ease cash-flow pressure between harvests, independent of any loan.",
+      "apply_via": "PM-KISAN portal or Common Service Centre, needs land records and Aadhaar-linked bank account."
+    },
+    {
+      "id": "fasal-bima-yojana",
+      "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+      "category": "crop_insurance",
+      "benefit": "Crop insurance against yield loss from natural calamities, pests, and disease, at a low farmer premium (1.5-5% of sum insured depending on the crop/season).",
+      "eligibility": "Farmers growing notified crops in notified areas, both loanee (via KCC) and non-loanee farmers.",
+      "description": "Protects against the season a Kisan Credit Card can't - a failed harvest, not just a cash-flow gap.",
+      "apply_via": "Automatically enrolled for KCC loanee farmers unless opted out; non-loanee farmers apply via bank, CSC, or the PMFBY portal."
+    },
+    {
+      "id": "mnrega",
+      "name": "MGNREGA (Mahatma Gandhi National Rural Employment Guarantee Act)",
+      "category": "rural_employment",
+      "benefit": "Legal guarantee of 100 days of wage employment per financial year to every rural household whose adult members volunteer for unskilled manual work.",
+      "eligibility": "Any rural household; work is demand-driven - you register and request work.",
+      "description": "A predictable income floor between agricultural seasons - the SIII (income intelligence) model treats MNREGA availability as a known seasonal pattern, not a windfall.",
+      "apply_via": "Gram Panchayat job card registration."
+    },
+    {
+      "id": "ppf",
+      "name": "Public Provident Fund (PPF)",
+      "category": "tax_saving",
+      "benefit": "Government-guaranteed ~7.1% annual return (rate reviewed quarterly), tax-free maturity, deduction up to ₹1.5L/year under Section 80C.",
+      "eligibility": "Any resident Indian individual.",
+      "description": "The lowest-risk 80C option - 15-year lock-in, zero market exposure, meant for long-term goals rather than liquidity.",
+      "apply_via": "Any nationalised bank, major private bank, or post office."
+    },
+    {
+      "id": "nps",
+      "name": "National Pension System (NPS)",
+      "category": "retirement",
+      "benefit": "Market-linked retirement corpus; an additional ₹50,000/year deduction under Section 80CCD(1B), separate from and on top of the ₹1.5L Section 80C limit.",
+      "eligibility": "Any Indian citizen aged 18-70.",
+      "description": "Often the highest-value 'next' scheme for someone who has already maxed out 80C via PPF/ELSS, since the 80CCD(1B) deduction is additional, not overlapping.",
+      "apply_via": "eNPS portal, or via a bank/POP-SP (Point of Presence Service Provider)."
+    },
+    {
+      "id": "elss",
+      "name": "Equity Linked Savings Scheme (ELSS)",
+      "category": "tax_saving",
+      "benefit": "Same ₹1.5L Section 80C deduction as PPF, market-linked returns, shortest lock-in of any 80C instrument (3 years).",
+      "eligibility": "Any resident Indian individual, via any SEBI-registered mutual fund.",
+      "description": "The higher-risk, higher-liquidity alternative to PPF for the same tax deduction - suits someone who wants their 80C money accessible sooner.",
+      "apply_via": "Any mutual fund AMC directly, or a broker/distributor platform."
+    },
+    {
+      "id": "section-80dd",
+      "name": "Section 80DD - Disability Dependent Deduction",
+      "category": "disability",
+      "benefit": "Flat deduction of ₹75,000/year (₹1,25,000 for severe disability, 80%+) for expenses on the medical treatment, training, and rehabilitation of a dependent with a disability, or premiums on a specified insurance scheme for their maintenance.",
+      "eligibility": "A resident individual with a dependent (self, in the case of Section 80U) certified as disabled by a recognised medical authority.",
+      "description": "A deduction, not a refund of actual expenses - claimable at the flat amount regardless of what was actually spent, once the disability certificate is on file.",
+      "apply_via": "Claimed directly in the annual income tax return, supported by Form 10-IA / the disability certificate."
+    },
+    {
+      "id": "pmjjby",
+      "name": "Pradhan Mantri Jeevan Jyoti Bima Yojana (PMJJBY)",
+      "category": "insurance",
+      "benefit": "₹2 lakh life cover for ₹436/year (rate reviewed periodically).",
+      "eligibility": "Bank/post-office account holders aged 18-50 (cover continues to 55) who give auto-debit consent.",
+      "description": "The cheapest formal life cover available - relevant for a sole-earner household weighing an informal loan against basic financial protection.",
+      "apply_via": "Auto-debit mandate through any bank/post-office savings account."
+    },
+    {
+      "id": "pmsby",
+      "name": "Pradhan Mantri Suraksha Bima Yojana (PMSBY)",
+      "category": "insurance",
+      "benefit": "₹2 lakh accidental death/full disability cover, ₹1 lakh partial disability, for ₹20/year.",
+      "eligibility": "Bank/post-office account holders aged 18-70 who give auto-debit consent.",
+      "description": "Near-zero-cost accident cover - often paired with PMJJBY as the two-scheme baseline safety net.",
+      "apply_via": "Auto-debit mandate through any bank/post-office savings account."
+    },
+    {
+      "id": "pmjdy",
+      "name": "Pradhan Mantri Jan Dhan Yojana (PMJDY)",
+      "category": "banking_access",
+      "benefit": "Zero-balance savings account, a RuPay debit card with accident insurance, and eligibility for an overdraft facility once the account has an operating history.",
+      "eligibility": "Any Indian citizen without an existing bank account.",
+      "description": "The entry point that made 530M+ Indians bank-account holders - relevant as the on-ramp for a user with no PTP Level 1 data yet.",
+      "apply_via": "Any bank branch or business correspondent, no minimum balance required."
+    },
+    {
+      "id": "mudra-loan",
+      "name": "Pradhan Mantri MUDRA Yojana",
+      "category": "small_business_credit",
+      "benefit": "Collateral-free loans up to ₹20 lakh (Shishu/Kishor/Tarun/Tarun Plus tiers) for non-farm micro and small enterprises, at bank-determined but regulated rates - not the 40-120% an unregistered app charges.",
+      "eligibility": "Any non-corporate, non-farm small/micro business (including gig-economy-adjacent ventures like a small delivery fleet or a shop).",
+      "description": "The formal-sector alternative to a scam loan app for someone trying to expand a small income-generating activity rather than just cover a shortfall.",
+      "apply_via": "Any participating bank, NBFC, or MFI; apply via the PMMY portal or branch."
+    },
+    {
+      "id": "atal-pension-yojana",
+      "name": "Atal Pension Yojana (APY)",
+      "category": "retirement",
+      "benefit": "Guaranteed monthly pension of ₹1,000-₹5,000 from age 60, based on contribution amount and age at entry.",
+      "eligibility": "Any Indian citizen aged 18-40 with a bank/post-office account; especially aimed at unorganised-sector workers with no employer pension.",
+      "description": "Built for exactly the income profile SAHAJ models under SIII - irregular, no employer, no existing pension coverage.",
+      "apply_via": "Any bank or post office savings account, auto-debit contribution."
+    },
+    {
+      "id": "sukanya-samriddhi",
+      "name": "Sukanya Samriddhi Yojana",
+      "category": "child_savings",
+      "benefit": "~8% annual return (rate reviewed quarterly, among the highest of small-savings schemes), Section 80C deduction, tax-free maturity, for a girl child's education/marriage corpus.",
+      "eligibility": "Parent/guardian of a girl child under 10, one account per girl (up to two per family).",
+      "description": "Highest-yielding small-savings instrument available, specifically earmarked so the funds aren't diverted to a short-term cash crunch.",
+      "apply_via": "Any bank or post office, birth certificate of the girl child required."
+    },
+    {
+      "id": "ayushman-bharat",
+      "name": "Ayushman Bharat - PM Jan Arogya Yojana (PM-JAY)",
+      "category": "health_insurance",
+      "benefit": "₹5 lakh/family/year cashless health cover at empanelled hospitals.",
+      "eligibility": "Families identified via SECC 2011 deprivation/occupational criteria; state extensions cover additional categories in some states.",
+      "description": "Removes the single most common trigger for a predatory loan in the personas SAHAJ is built for - an unplanned hospital bill.",
+      "apply_via": "Check eligibility on the PM-JAY portal or at any empanelled hospital's Ayushman Mitra desk; Ayushman card issued via CSC."
+    },
+    {
+      "id": "stand-up-india",
+      "name": "Stand-Up India",
+      "category": "small_business_credit",
+      "benefit": "Bank loans between ₹10 lakh and ₹1 crore for greenfield enterprises in manufacturing, services, or trading.",
+      "eligibility": "At least one woman or SC/ST borrower per bank branch, for a new (not existing) enterprise.",
+      "description": "Larger-ticket formal credit than MUDRA, aimed at first-time entrepreneurs from underrepresented groups.",
+      "apply_via": "Any scheduled commercial bank branch, or the Stand-Up India portal."
+    },
+    {
+      "id": "pmegp",
+      "name": "Prime Minister's Employment Generation Programme (PMEGP)",
+      "category": "small_business_credit",
+      "benefit": "Credit-linked capital subsidy (15-35% of project cost depending on category/area) for setting up new micro-enterprises.",
+      "eligibility": "Individuals 18+, project cost up to ₹50 lakh (manufacturing) or ₹20 lakh (services).",
+      "description": "Subsidised startup capital for someone looking to move from gig/irregular income into owning a small fixed enterprise.",
+      "apply_via": "PMEGP e-portal, implemented through KVIC, KVIB, and District Industries Centres."
+    },
+    {
+      "id": "senior-citizen-savings",
+      "name": "Senior Citizen Savings Scheme (SCSS)",
+      "category": "retirement",
+      "benefit": "Among the highest fixed government-backed interest rates available (reviewed quarterly), quarterly payout, Section 80C eligible up to ₹1.5L.",
+      "eligibility": "Individuals 60+ (55+ for retirees under superannuation/VRS with conditions).",
+      "description": "Relevant for an older dependent in a household SAHAJ is modelling, not the primary user personas directly.",
+      "apply_via": "Any bank or post office."
+    },
+    {
+      "id": "kisan-vikas-patra",
+      "name": "Kisan Vikas Patra (KVP)",
+      "category": "savings",
+      "benefit": "Fixed-return small-savings certificate that doubles the invested amount over a government-set maturity period (rate reviewed quarterly), no 80C benefit.",
+      "eligibility": "Any resident individual (despite the name, not restricted to farmers).",
+      "description": "No tax break, but simple and guaranteed - relevant as a plain savings option distinct from PPF/ELSS's 80C-linked ones.",
+      "apply_via": "Any post office or authorised bank."
+    },
+    {
+      "id": "e-shram",
+      "name": "e-Shram (National Database of Unorganised Workers)",
+      "category": "gig_worker_registration",
+      "benefit": "Free e-Shram card that acts as the entry point to unorganised-sector welfare schemes and accident insurance cover (₹2 lakh under PMSBY bundled in for the first year).",
+      "eligibility": "Unorganised-sector workers aged 16-59, including gig and platform workers, street vendors, domestic workers, and agricultural labourers.",
+      "description": "The registration layer most directly aimed at Rajesh's category of worker - a Swiggy driver has no other formal employment record without it.",
+      "apply_via": "e-Shram portal or Common Service Centre, Aadhaar-linked."
+    }
+  ]
+}

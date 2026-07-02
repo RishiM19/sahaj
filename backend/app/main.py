@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.channels import chat, ussd
 from app.db import cfti
-from app.db.clients import close_all, get_neo4j, get_pg_pool
+from app.db.clients import close_all, get_neo4j, get_pg_pool, get_qdrant
 from app.orchestrator.graph import Orchestrator
 
 
@@ -17,7 +17,7 @@ async def lifespan(app: FastAPI):
     pg_pool = await get_pg_pool()
     await cfti.ensure_schema(pg_pool)
 
-    orchestrator = Orchestrator(neo4j_driver, pg_pool)
+    orchestrator = Orchestrator(neo4j_driver, pg_pool, get_qdrant())
     await orchestrator.bft.ensure_schema()
     app.state.orchestrator = orchestrator
 

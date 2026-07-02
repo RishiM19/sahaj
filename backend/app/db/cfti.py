@@ -62,3 +62,26 @@ async def count_reports(pool: asyncpg.Pool, entity_name: str, area: str | None) 
             area,
         )
         return row["n"] if row else 0
+
+
+async def recent_area_summary(pool: asyncpg.Pool, area: str | None, days: int = 7) -> dict:
+    """What Community Intelligence surfaces - distinct threats reported nearby
+    recently, independent of whether this particular user asked about any of
+    them. This is the Phase 1/2 single-node approximation of what becomes
+    real cross-device federated learning in Phase 3 (see docs/ROADMAP.md)."""
+    async with pool.acquire() as conn:
+        row = await conn.fetchrow(
+            """
+            SELECT count(*) AS total, count(DISTINCT lower(entity_name)) AS distinct_entities
+            FROM cfti_reports
+            WHERE reported_at > now() - ($1 || ' days')::interval
+              AND ($2::text IS NULL OR area = $2)
+            """,
+            str(days),
+            area,
+        )
+        return {
+            "total_reports": row["total"] if row else 0,
+            "distinct_entities": row["distinct_entities"] if row else 0,
+            "days": days,
+        }
