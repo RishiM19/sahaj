@@ -19,6 +19,7 @@ PERSONAS = [
         "name": "Rajesh",
         "language": "hi",
         "trust_level": 3,
+        "income_source": "gig",
         # declining weekly gig income - "down 3 weeks in a row", trending
         # toward the deck's "slowest earning week" figure, and a balance
         # that's already been drawn down by the same slow stretch
@@ -31,6 +32,7 @@ PERSONAS = [
         "name": "Priya",
         "language": "en",
         "trust_level": 2,
+        "income_source": "salaried",
         "income_samples": [44_000, 44_000, 44_000, 44_000],  # stable teacher salary
         "current_balance": 38_000,
         "fixed_expenses": [{"label": "Rent", "amount": 15_000, "due_day": 5}],
@@ -40,6 +42,7 @@ PERSONAS = [
         "name": "Kisan",
         "language": "kn",
         "trust_level": 1,  # low trust - form is in English, branch is 14km away
+        "income_source": "farmer",
         "income_samples": [6_000, 0, 0, 42_000],  # seasonal paddy income
         "current_balance": 4_200,
         "fixed_expenses": [{"label": "Seed & fertiliser", "amount": 3_500, "due_day": 10}],
@@ -49,6 +52,7 @@ PERSONAS = [
         "name": "Divya",
         "language": "en",
         "trust_level": 2,
+        "income_source": "gig",  # freelance - irregular like gig work, no crop/salary seasonality
         "income_samples": [28_000, 29_500, 27_000, 30_000],  # freelance writing
         "current_balance": 21_000,
         "fixed_expenses": [{"label": "Rent", "amount": 12_000, "due_day": 3}],
@@ -66,6 +70,7 @@ async def seed() -> None:
         await bft.get_or_create_user(phone, name=persona["name"], language=persona["language"])
         await bft.set_trust_level(phone, persona["trust_level"])
         await bft.set_balance(phone, persona["current_balance"])
+        await bft.set_income_source(phone, persona["income_source"])
         await bft.update_behavioral_state(phone, score=0, factors=["seed"])
 
         base = datetime.now(UTC) - timedelta(weeks=len(persona["income_samples"]))

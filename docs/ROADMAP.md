@@ -17,10 +17,10 @@ Every unchecked item below is also a tracked [GitHub issue](https://github.com/R
 
 ## Phase 2 — All personas, all channels
 
-- [ ] Remaining six agents: Scheme Navigator, Crisis Intercept, Community Intelligence, Learning & Literacy, Voice & Accessibility, Document Assist
-- [ ] Scheme RAG over Qdrant (400+ government schemes — starting with a real seed set, not synthetic)
-- [ ] Seasonal & Irregular Income Intelligence (SIII) — real model over gig/crop/MNREGA income patterns, not the Phase 1 rule-of-thumb version
-- [ ] Financial Life Simulation Engine (FLSE) — real 10,000-pass Monte Carlo, not the Phase 1 simplified version
+- [x] Scheme Navigator, Crisis Intercept, Community Intelligence, Learning & Literacy — 4 of the remaining 6 agents (Voice & Accessibility and Document Assist still open, blocked on speech/OCR below)
+- [x] Scheme RAG over Qdrant — 20-scheme real seed set (growing toward 400+ is separate, ongoing work)
+- [x] Seasonal & Irregular Income Intelligence (SIII) — structured crop-calendar/gig-demand/MNREGA seasonality on top of the Monte Carlo, not a flat mean/std (see `app/agents/seasonal.py`; a model trained on real gig/crop-yield datasets is out of reach without institutional data access)
+- [x] Financial Life Simulation Engine (FLSE) — shares Cash Flow's 10,000-pass Monte Carlo engine directly, so the narrated story and the numeric warning can't drift apart
 - [ ] Speech pipeline: faster-whisper (STT) + Piper-TTS (TTS), voice-first path for the Divya persona
 - [ ] PaddleOCR document-assist pipeline (Kisan/Divya form-filling flow)
 - [ ] Real WhatsApp Cloud API webhook (sandbox number) replacing the chat simulator

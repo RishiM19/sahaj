@@ -102,7 +102,16 @@ class BFTService:
             current_balance=user.get("currentBalance"),
             income_verified=user.get("incomeVerified", False),
             digilocker_linked=user.get("digilockerLinked", False),
+            income_source=user.get("incomeSource", "gig"),
         )
+
+    async def set_income_source(self, phone: str, source: str) -> None:
+        async with self._driver.session() as session:
+            await session.run(
+                "MATCH (u:User {phone: $phone}) SET u.incomeSource = $source",
+                phone=phone,
+                source=source,
+            )
 
     async def set_balance(self, phone: str, balance: float) -> None:
         async with self._driver.session() as session:

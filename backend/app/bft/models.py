@@ -45,6 +45,7 @@ class BFTSnapshot:
     current_balance: float | None = None
     income_verified: bool = False  # PTP Level 3 - confirmed via Account Aggregator, not self-declared
     digilocker_linked: bool = False  # PTP Level 4
+    income_source: str = "gig"  # "gig" | "farmer" | "salaried" - see app/agents/seasonal.py
 
     @property
     def income_trend_pct(self) -> float | None:

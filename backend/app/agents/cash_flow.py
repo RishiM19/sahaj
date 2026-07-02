@@ -1,9 +1,10 @@
-"""Cash Flow agent - a simplified SIII (Seasonal & Irregular Income
-Intelligence) projection, backed by a real Monte Carlo simulation (this is
-also the numeric engine the Life Simulator/FLSE agent narrates - see
-life_simulator.py). docs/ROADMAP.md tracks upgrading the income model itself
-from "weekly mean/std" to a real seasonal model trained on gig/crop/MNREGA
-data in Phase 2; the simulation mechanics here don't change when that lands.
+"""Cash Flow agent - SIII (Seasonal & Irregular Income Intelligence)
+projection, backed by a real Monte Carlo simulation (this is also the
+numeric engine the Life Simulator/FLSE agent narrates - see
+life_simulator.py). The income model applies the structured seasonality in
+app/agents/seasonal.py (crop calendar, gig demand cycle, MNREGA) on top of
+each user's own recency-weighted mean/std, rather than treating every week
+as an independent draw from a flat distribution.
 """
 
 from __future__ import annotations
@@ -13,6 +14,7 @@ import re
 import numpy as np
 
 from app.agents.base import Observation, TurnContext
+from app.agents.seasonal import IncomeSource, expected_mnrega_topup, month_for_week_offset, monthly_multiplier
 from app.bft.models import BFTSnapshot
 
 TRIALS = 10_000
@@ -61,11 +63,22 @@ def run_monte_carlo(bft: BFTSnapshot, extra_inflow: float = 0.0) -> MonteCarloRe
         # flow.
         expenses.append({"label": "EMI (new loan)", "amount": extra_inflow * 0.213, "due_day": 8})
 
+    source = IncomeSource(bft.income_source)
     rng = np.random.default_rng()
     weeks = HORIZON_DAYS // 7 + 1
+    # each week gets its own seasonal multiplier and MNREGA top-up based on
+    # which calendar month it falls in - a farmer's week 4 (post-monsoon
+    # sowing) looks nothing like a gig worker's week 4 (Diwali demand spike),
+    # even off the same historical mean/std
+    week_months = [month_for_week_offset(w) for w in range(weeks)]
+    seasonal_mults = np.array([monthly_multiplier(source, m) for m in week_months])
+    mnrega_topups = np.array([expected_mnrega_topup(source, m) for m in week_months])
+
     # trials x weeks matrix of simulated weekly income, floored at 0
     weekly_income = np.clip(
-        rng.normal(weekly_mean, weekly_std, size=(TRIALS, weeks)), 0, None
+        rng.normal(weekly_mean, weekly_std, size=(TRIALS, weeks)) * seasonal_mults + mnrega_topups,
+        0,
+        None,
     )
 
     balances = np.full(TRIALS, start_balance, dtype=float)
@@ -134,6 +147,7 @@ class CashFlowAgent:
                 "median_shortfall": round(result.median_shortfall, 0),
                 "trials": TRIALS,
                 "income_verified": ctx.bft.income_verified,
+                "income_source": ctx.bft.income_source,
             },
             severity="critical" if result.deficit_probability > 0.5 else "warning"
             if result.deficit_probability > 0.2
