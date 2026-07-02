@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: sahaj
+data:
+  NEO4J_URI: "bolt://neo4j:7687"
+  NEO4J_USER: "neo4j"
+  MONGO_URI: "mongodb://mongo:27017"
+  MONGO_DB: "sahaj"
+  REDIS_URL: "redis://redis:6379/0"
+  QDRANT_URL: "http://qdrant:6333"
+  POSTGRES_DSN: "postgresql://sahaj:sahaj_dev_pw@postgres:5432/sahaj_cfti"
+  OPENSEARCH_URL: "http://opensearch:9200"
+  KAFKA_BOOTSTRAP_SERVERS: "redpanda:9092"
+  # Ollama runs on the host, not in-cluster (see docs/ARCHITECTURE.md) -
+  # host.docker.internal resolves back to the machine running kind/Docker
+  # Desktop. Point this at a real in-cluster/external endpoint in production.
+  OLLAMA_URL: "http://host.docker.internal:11434"
+  OLLAMA_MODEL: "phi3:mini"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-secrets
+  namespace: sahaj
+type: Opaque
+stringData:
+  # Placeholder values for the local kind cluster - never commit real
+  # secrets here. In production these come from your secrets manager
+  # (Vault, per docs/ROADMAP.md's Phase 3 identity/secrets item), injected
+  # via a K8s Secret created out-of-band, not checked into this file.
+  NEO4J_PASSWORD: "sahaj_dev_pw"
