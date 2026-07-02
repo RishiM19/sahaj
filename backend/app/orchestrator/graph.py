@@ -25,10 +25,12 @@ from app.agents.life_simulator import LifeSimulatorAgent
 from app.agents.scam_guard import ScamGuardAgent
 from app.agents.scheme_navigator import SchemeNavigatorAgent
 from app.bft.service import BFTService
+from app.integrations.gov import GovIntegrations
 from app.llm.client import LLMClient
 from app.orchestrator.state import TurnState
 from app.rag.schemes import SchemeIndex
 from app.trust.ptp import agent_allowed, max_response_depth
+from app.trust.upgrade import TrustUpgradeService
 
 _COMPOSE_SYSTEM = """You are SAHAJ, a financial assistant for Indian users the formal system
 underserves. You've just received a set of internal observations from specialist agents about
@@ -62,6 +64,7 @@ class Orchestrator:
     ) -> None:
         self.llm = llm or LLMClient()
         self.bft = BFTService(neo4j_driver)
+        self.trust_upgrade = TrustUpgradeService(self.bft, GovIntegrations())
         self.agents: list[Agent] = [
             FinancialPsycheAgent(self.llm),
             ScamGuardAgent(self.llm, pg_pool),

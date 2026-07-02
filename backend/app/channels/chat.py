@@ -10,8 +10,10 @@ from __future__ import annotations
 
 from dataclasses import asdict
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
+
+from app.trust.upgrade import TrustUpgradeError
 
 router = APIRouter(prefix="/api/chat", tags=["chat"])
 
@@ -50,8 +52,11 @@ async def send_message(body: MessageIn, request: Request):
 @router.post("/trust")
 async def raise_trust_level(body: TrustIn, request: Request):
     orchestrator = request.app.state.orchestrator
-    await orchestrator.bft.set_trust_level(body.phone, body.level)
-    return {"phone": body.phone, "trust_level": body.level}
+    try:
+        result = await orchestrator.trust_upgrade.raise_level(body.phone, body.level)
+    except TrustUpgradeError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    return {"phone": body.phone, "trust_level": result.level, "detail": result.detail}
 
 
 @router.get("/bft/{phone}")
@@ -66,4 +71,6 @@ async def get_bft(phone: str, request: Request):
         "trust_level": snapshot.trust_level,
         "income_trend_pct": snapshot.income_trend_pct,
         "current_balance": snapshot.current_balance,
+        "income_verified": snapshot.income_verified,
+        "digilocker_linked": snapshot.digilocker_linked,
     }

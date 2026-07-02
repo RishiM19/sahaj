@@ -43,6 +43,8 @@ class BFTSnapshot:
     income_samples: list[IncomeSample] = field(default_factory=list)
     fixed_expenses: list[dict] = field(default_factory=list)  # [{label, amount, due_day}]
     current_balance: float | None = None
+    income_verified: bool = False  # PTP Level 3 - confirmed via Account Aggregator, not self-declared
+    digilocker_linked: bool = False  # PTP Level 4
 
     @property
     def income_trend_pct(self) -> float | None:

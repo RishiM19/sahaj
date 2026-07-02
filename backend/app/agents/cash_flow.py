@@ -133,6 +133,7 @@ class CashFlowAgent:
                 "first_deficit_day": result.first_deficit_day,
                 "median_shortfall": round(result.median_shortfall, 0),
                 "trials": TRIALS,
+                "income_verified": ctx.bft.income_verified,
             },
             severity="critical" if result.deficit_probability > 0.5 else "warning"
             if result.deficit_probability > 0.2

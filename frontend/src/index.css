@@ -66,18 +66,29 @@ body {
 .persona-card {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.4rem;
   padding: 0.75rem;
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--panel);
-  cursor: pointer;
-  text-align: left;
 }
 
 .persona-card.active {
   border-color: var(--accent-2);
   background: var(--panel-2);
+}
+
+.persona-card-select {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  font: inherit;
 }
 
 .persona-card .name { font-weight: 600; }
@@ -88,6 +99,32 @@ body {
   display: flex;
   gap: 0.35rem;
   flex-wrap: wrap;
+}
+
+.badge-verified {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+
+.raise-trust {
+  align-self: flex-start;
+  background: none;
+  border: 1px solid var(--accent-2);
+  color: var(--accent-2);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.raise-trust:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.upgrade-error {
+  font-size: 0.7rem;
+  color: var(--critical);
 }
 
 .badge {

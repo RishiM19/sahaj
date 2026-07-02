@@ -100,6 +100,8 @@ class BFTService:
             income_samples=income_samples,
             fixed_expenses=expenses,
             current_balance=user.get("currentBalance"),
+            income_verified=user.get("incomeVerified", False),
+            digilocker_linked=user.get("digilockerLinked", False),
         )
 
     async def set_balance(self, phone: str, balance: float) -> None:
@@ -108,6 +110,22 @@ class BFTService:
                 "MATCH (u:User {phone: $phone}) SET u.currentBalance = $balance",
                 phone=phone,
                 balance=balance,
+            )
+
+    async def set_income_verified(self, phone: str, verified: bool = True) -> None:
+        async with self._driver.session() as session:
+            await session.run(
+                "MATCH (u:User {phone: $phone}) SET u.incomeVerified = $verified",
+                phone=phone,
+                verified=verified,
+            )
+
+    async def set_digilocker_linked(self, phone: str, linked: bool = True) -> None:
+        async with self._driver.session() as session:
+            await session.run(
+                "MATCH (u:User {phone: $phone}) SET u.digilockerLinked = $linked",
+                phone=phone,
+                linked=linked,
             )
 
     async def record_income_sample(

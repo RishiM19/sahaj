@@ -32,6 +32,14 @@ export interface BftSnapshot {
   trust_level: number;
   income_trend_pct: number | null;
   current_balance: number | null;
+  income_verified: boolean;
+  digilocker_linked: boolean;
+}
+
+export interface TrustUpgradeResponse {
+  phone: string;
+  trust_level: number;
+  detail: string;
 }
 
 export async function sendChatMessage(phone: string, message: string): Promise<ChatResponse> {
@@ -57,5 +65,18 @@ export async function sendUssdMessage(phone: string, message: string): Promise<U
 export async function getBft(phone: string): Promise<BftSnapshot> {
   const res = await fetch(`${API_BASE}/api/chat/bft/${encodeURIComponent(phone)}`);
   if (!res.ok) throw new Error(`bft lookup failed: ${res.status}`);
+  return res.json();
+}
+
+export async function raiseTrustLevel(phone: string, level: number): Promise<TrustUpgradeResponse> {
+  const res = await fetch(`${API_BASE}/api/chat/trust`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ phone, level }),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.detail ?? `trust upgrade failed: ${res.status}`);
+  }
   return res.json();
 }
