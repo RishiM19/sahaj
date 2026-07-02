@@ -2,6 +2,8 @@
 
 Three phases, same boundary we'd defend to a judge: phases 1 and 2 are things you can actually run and click through today; phase 3 is designed and interface-scaffolded but needs infrastructure (real federation clients, real gov API credentials, a real cluster) that doesn't make sense to stand up before there are real users.
 
+Every unchecked item below is also a tracked [GitHub issue](https://github.com/RishiM19/sahaj/issues), labelled `phase-2` or `phase-3` — that's the place to pick up individual pieces of work rather than this file.
+
 ## Phase 1 — Foundation & first slice ✅ building now
 
 - [x] Behavioral Financial Twin in Neo4j — schema + four-state machine (`STABLE → STRESSED → VULNERABLE → CRISIS`)
@@ -11,7 +13,7 @@ Three phases, same boundary we'd defend to a judge: phases 1 and 2 are things yo
 - [x] FastAPI backend, chat channel (WhatsApp/PWA-tier) + USSD simulator channel
 - [x] Progressive Trust Protocol levels 0–2 gating agent depth
 - [x] React PWA — chat screen + USSD screen, talking to the real backend
-- [ ] Golden-path demo: Rajesh's WhatsApp scam-alert scenario, traced end to end
+- [x] Golden-path demo: Rajesh's WhatsApp scam-alert scenario, traced end to end
 
 ## Phase 2 — All personas, all channels
 
