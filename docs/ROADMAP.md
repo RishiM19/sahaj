@@ -25,7 +25,7 @@ Every unchecked item below is also a tracked [GitHub issue](https://github.com/R
 - [ ] PaddleOCR document-assist pipeline (Kisan/Divya form-filling flow)
 - [ ] Real WhatsApp Cloud API webhook (sandbox number) replacing the chat simulator
 - [ ] PTP levels 3–4 (UPI consent, DigiLocker-gated flows — against the mocked `GovIntegrations` interface)
-- [ ] OpenSearch for full-text scheme/threat search
+- [x] OpenSearch for full-text scheme/threat search
 
 ## Phase 3 — Privacy, scale, production deployment (designed, not live)
 

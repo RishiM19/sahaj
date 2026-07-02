@@ -21,7 +21,7 @@ _COLLECTION = "schemes"
 _EMBED_MODEL = "all-MiniLM-L6-v2"  # matches the exec-summary spec, 384-dim, CPU-friendly
 
 
-def _load_schemes() -> list[dict]:
+def load_schemes() -> list[dict]:
     return json.loads(_SCHEMES_PATH.read_text())["schemes"]
 
 
@@ -62,7 +62,7 @@ class SchemeIndex:
 
     async def index_all(self) -> int:
         await self.ensure_collection()
-        schemes = _load_schemes()
+        schemes = load_schemes()
         vectors = await self._embed([_scheme_text(s) for s in schemes])
         points = [
             models.PointStruct(id=i, vector=vec, payload=scheme)

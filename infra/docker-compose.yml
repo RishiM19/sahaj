@@ -70,6 +70,23 @@ services:
       timeout: 5s
       retries: 10
 
+  opensearch:
+    image: opensearchproject/opensearch:2.17.1
+    ports:
+      - "9200:9200"
+    environment:
+      discovery.type: single-node
+      DISABLE_SECURITY_PLUGIN: "true"
+      DISABLE_INSTALL_DEMO_CONFIG: "true"
+      OPENSEARCH_JAVA_OPTS: "-Xms512m -Xmx512m"
+    volumes:
+      - opensearch_data:/usr/share/opensearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9200/_cluster/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   # Ollama is deliberately NOT a service here. On macOS, run it natively
   # (`brew install ollama && brew services start ollama`) so it gets Metal
   # acceleration and isn't boxed into Docker Desktop's small default VM
@@ -91,3 +108,4 @@ volumes:
   redis_data:
   qdrant_data:
   postgres_data:
+  opensearch_data:

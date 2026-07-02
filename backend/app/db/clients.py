@@ -11,6 +11,7 @@ import asyncpg
 import redis.asyncio as redis
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 from neo4j import AsyncDriver, AsyncGraphDatabase
+from opensearchpy import AsyncOpenSearch
 from qdrant_client import AsyncQdrantClient
 
 from app.config import get_settings
@@ -19,6 +20,7 @@ _neo4j_driver: AsyncDriver | None = None
 _mongo_client: AsyncIOMotorClient | None = None
 _redis_client: redis.Redis | None = None
 _qdrant_client: AsyncQdrantClient | None = None
+_opensearch_client: AsyncOpenSearch | None = None
 _pg_pool: asyncpg.Pool | None = None
 
 
@@ -54,6 +56,13 @@ def get_qdrant() -> AsyncQdrantClient:
     return _qdrant_client
 
 
+def get_opensearch() -> AsyncOpenSearch:
+    global _opensearch_client
+    if _opensearch_client is None:
+        _opensearch_client = AsyncOpenSearch(hosts=[get_settings().opensearch_url], use_ssl=False)
+    return _opensearch_client
+
+
 async def get_pg_pool() -> asyncpg.Pool:
     global _pg_pool
     if _pg_pool is None:
@@ -70,3 +79,5 @@ async def close_all() -> None:
         await _redis_client.aclose()
     if _pg_pool is not None:
         await _pg_pool.close()
+    if _opensearch_client is not None:
+        await _opensearch_client.close()

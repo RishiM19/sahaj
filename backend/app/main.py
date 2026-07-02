@@ -5,10 +5,11 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.channels import chat, ussd
+from app.channels import chat, search, ussd
 from app.db import cfti
-from app.db.clients import close_all, get_neo4j, get_pg_pool, get_qdrant
+from app.db.clients import close_all, get_neo4j, get_opensearch, get_pg_pool, get_qdrant
 from app.orchestrator.graph import Orchestrator
+from app.search.opensearch_index import ensure_indices
 
 
 @asynccontextmanager
@@ -20,6 +21,9 @@ async def lifespan(app: FastAPI):
     orchestrator = Orchestrator(neo4j_driver, pg_pool, get_qdrant())
     await orchestrator.bft.ensure_schema()
     app.state.orchestrator = orchestrator
+
+    app.state.opensearch = get_opensearch()
+    await ensure_indices(app.state.opensearch)
 
     yield
 
@@ -37,6 +41,7 @@ app.add_middleware(
 
 app.include_router(chat.router)
 app.include_router(ussd.router)
+app.include_router(search.router)
 
 
 @app.get("/api/health")
