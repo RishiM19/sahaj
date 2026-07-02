@@ -19,6 +19,8 @@ class Settings(BaseSettings):
 
     opensearch_url: str = "http://localhost:9200"
 
+    kafka_bootstrap_servers: str = "localhost:9092"
+
     postgres_dsn: str = "postgresql://sahaj:sahaj_dev_pw@localhost:5432/sahaj_cfti"
 
     ollama_url: str = "http://localhost:11434"

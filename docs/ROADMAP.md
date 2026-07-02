@@ -30,7 +30,7 @@ Every unchecked item below is also a tracked [GitHub issue](https://github.com/R
 ## Phase 3 — Privacy, scale, production deployment (designed, not live)
 
 - [ ] Community Financial Threat Intelligence (CFTI) as genuine federated learning via Flower, with Opacus differential privacy (ε = 0.1)
-- [ ] Kafka-compatible event backbone (Redpanda) replacing the in-process bus
+- [x] Kafka-compatible event backbone (Redpanda) - `sahaj.events` topic, `bft.updated`/`scam.alert`/`query.resolved` published from the orchestrator, verified live with `rpk topic consume`
 - [ ] Real Setu Account Aggregator sandbox integration
 - [ ] Real DigiLocker / Aadhaar eKYC integration (requires partner/AUA-KUA registration — out of reach until SAHAJ has an institutional backer)
 - [ ] Kubernetes manifests exercised against a real cluster (currently scaffolded only)

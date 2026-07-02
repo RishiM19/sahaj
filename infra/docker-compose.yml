@@ -87,6 +87,30 @@ services:
       timeout: 5s
       retries: 10
 
+  redpanda:
+    # Kafka-API-compatible, single binary - see docs/ARCHITECTURE.md for why
+    # this replaces Kafka + Zookeeper + Confluent Schema Registry for a
+    # two-person team's event backbone.
+    image: docker.redpanda.com/redpandadata/redpanda:v24.2.7
+    command:
+      - redpanda
+      - start
+      - --smp=1
+      - --memory=512M
+      - --overprovisioned
+      - --node-id=0
+      - --kafka-addr=PLAINTEXT://0.0.0.0:9092
+      - --advertise-kafka-addr=PLAINTEXT://localhost:9092
+    ports:
+      - "9092:9092"
+    volumes:
+      - redpanda_data:/var/lib/redpanda/data
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster health | grep -q 'Healthy:.*true' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
   # Ollama is deliberately NOT a service here. On macOS, run it natively
   # (`brew install ollama && brew services start ollama`) so it gets Metal
   # acceleration and isn't boxed into Docker Desktop's small default VM
@@ -109,3 +133,4 @@ volumes:
   qdrant_data:
   postgres_data:
   opensearch_data:
+  redpanda_data:

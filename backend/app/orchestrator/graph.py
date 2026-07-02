@@ -25,6 +25,7 @@ from app.agents.life_simulator import LifeSimulatorAgent
 from app.agents.scam_guard import ScamGuardAgent
 from app.agents.scheme_navigator import SchemeNavigatorAgent
 from app.bft.service import BFTService
+from app.events.bus import EventBus, get_event_bus
 from app.integrations.gov import GovIntegrations
 from app.llm.client import LLMClient
 from app.orchestrator.state import TurnState
@@ -61,8 +62,10 @@ class Orchestrator:
         pg_pool: asyncpg.Pool,
         qdrant: AsyncQdrantClient,
         llm: LLMClient | None = None,
+        events: EventBus | None = None,
     ) -> None:
         self.llm = llm or LLMClient()
+        self.events = events or get_event_bus()
         self.bft = BFTService(neo4j_driver)
         self.trust_upgrade = TrustUpgradeService(self.bft, GovIntegrations())
         self.agents: list[Agent] = [
@@ -153,8 +156,23 @@ class Orchestrator:
         update = state.get("state_update")
         if update and update.get("proposed_score") is not None:
             factors = [f for f in [update.get("emotion"), update.get("bias")] if f]
-            await self.bft.update_behavioral_state(phone, update["proposed_score"], factors)
+            new_state = await self.bft.update_behavioral_state(phone, update["proposed_score"], factors)
+            await self.events.publish(
+                "bft.updated",
+                {"phone": phone, "behavioral_state": new_state.name, "score": update["proposed_score"]},
+            )
         await self.bft.log_query(phone, state["channel"], query_type="turn")
+
+        for obs in state["observations"]:
+            if obs.agent == "scam_guard" and obs.severity == "critical":
+                await self.events.publish(
+                    "scam.alert",
+                    {"phone": phone, "entity": obs.details.get("entity"), "channel": state["channel"]},
+                )
+
+        await self.events.publish(
+            "query.resolved", {"phone": phone, "channel": state["channel"], "message": state["message"]}
+        )
         return {}
 
     async def handle_turn(self, phone: str, channel: str, message: str) -> TurnState:
