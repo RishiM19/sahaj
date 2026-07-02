@@ -23,3 +23,6 @@ Pillow>=11,<13
 aiokafka>=0.11,<0.12
 flwr[simulation]>=1.32,<2
 opacus>=1.6,<2
+opentelemetry-sdk>=1.43,<2
+opentelemetry-exporter-otlp-proto-grpc>=1.43,<2
+opentelemetry-instrumentation-fastapi>=0.64b0,<0.65

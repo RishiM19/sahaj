@@ -29,6 +29,8 @@ class Settings(BaseSettings):
     setu_client_secret: str = ""
     setu_product_instance_id: str = ""
 
+    otel_exporter_endpoint: str = "localhost:4317"
+
     postgres_dsn: str = "postgresql://sahaj:sahaj_dev_pw@localhost:5432/sahaj_cfti"
 
     ollama_url: str = "http://localhost:11434"

@@ -50,6 +50,8 @@ cd ../frontend && npm install && npm run dev
 
 Open the PWA, pick the Rajesh persona, and send: *"Ek loan app mila hai friend ne share kiya. ₹15,000 chahiye. Is this safe?"* — that's the golden-path demo traced end to end in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
+Grafana's at [localhost:3000](http://localhost:3000) (anonymous admin access, dev-only) with a "SAHAJ Overview" dashboard auto-provisioned — turn throughput, agent dispatches by severity, and turn latency, live off whatever traffic you just generated.
+
 ## Status
 
 This is an active build, not a finished product. See [`docs/ROADMAP.md`](docs/ROADMAP.md) for what's actually running versus what's designed-but-not-built, and [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for exactly which pieces of the original stack were swapped for free/self-hostable equivalents and why.

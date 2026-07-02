@@ -9,6 +9,7 @@ from app.channels import chat, document, search, setu, ussd, voice, whatsapp
 from app.db import cfti
 from app.db.clients import close_all, get_neo4j, get_opensearch, get_pg_pool, get_qdrant
 from app.events.bus import get_event_bus
+from app.observability import setup_observability
 from app.orchestrator.graph import Orchestrator
 from app.search.opensearch_index import ensure_indices
 
@@ -33,6 +34,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="SAHAJ", lifespan=lifespan)
+setup_observability(app)
 
 app.add_middleware(
     CORSMiddleware,

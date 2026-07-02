@@ -35,7 +35,7 @@ Every unchecked item below is also a tracked [GitHub issue](https://github.com/R
 - [ ] Real DigiLocker / Aadhaar eKYC integration (requires partner/AUA-KUA registration — out of reach until SAHAJ has an institutional backer)
 - [ ] Kubernetes manifests exercised against a real cluster (currently scaffolded only)
 - [ ] Keycloak, Vault, OPA, Falco — full identity/secrets/policy/runtime-security stack
-- [ ] OpenTelemetry + Prometheus/Grafana observability
+- [x] OpenTelemetry + Prometheus/Grafana observability - `app/observability.py` exports traces + metrics over OTLP to the Collector (`infra/otel/`), which Prometheus scrapes and Grafana visualizes (`infra/grafana/`, "SAHAJ Overview" dashboard auto-provisioned). Verified the full chain live: triggered a turn, watched `sahaj_turns_total`, `sahaj_agent_dispatches_total`, and `sahaj_turn_duration_seconds` land in Prometheus and be queryable through Grafana's own datasource proxy.
 - [ ] Village-node deployment (Raspberry Pi 4 / repurposed Android at CSC centres) for offline batch-sync
 
 See [`ARCHITECTURE.md`](ARCHITECTURE.md) for exactly what each swap in phases 1–2 replaced and why, and [`AGENTS.md`](AGENTS.md) for what each of the ten agents does.

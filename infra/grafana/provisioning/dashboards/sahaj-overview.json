@@ -1,0 +1,54 @@
+{
+  "title": "SAHAJ Overview",
+  "uid": "sahaj-overview",
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "refresh": "10s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Turns per minute, by channel",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "targets": [
+        { "expr": "sum by (channel) (rate(sahaj_turns_total[5m]))", "legendFormat": "{{channel}}" }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Agent dispatches, by severity",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "targets": [
+        {
+          "expr": "sum by (severity) (rate(sahaj_agent_dispatches_total[5m]))",
+          "legendFormat": "{{severity}}"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Turn latency (p95)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(sahaj_turn_duration_seconds_bucket[5m])))",
+          "legendFormat": "p95 seconds"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Scam alerts, by agent",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "targets": [
+        {
+          "expr": "sum by (agent) (rate(sahaj_agent_dispatches_total{severity=\"critical\"}[5m]))",
+          "legendFormat": "{{agent}}"
+        }
+      ]
+    }
+  ]
+}

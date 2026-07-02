@@ -28,6 +28,7 @@ from app.bft.service import BFTService
 from app.events.bus import EventBus, get_event_bus
 from app.integrations.gov import GovIntegrations
 from app.llm.client import LLMClient
+from app.observability import record_agent_dispatch, track_turn
 from app.orchestrator.state import TurnState
 from app.rag.schemes import SchemeIndex
 from app.trust.ptp import agent_allowed, max_response_depth
@@ -107,6 +108,8 @@ class Orchestrator:
 
         results = await asyncio.gather(*(run_one(a) for a in allowed))
         observations = [o for o in results if o is not None]
+        for obs in observations:
+            record_agent_dispatch(obs.agent, obs.severity)
 
         state_update = next(
             (o.details for o in observations if o.agent == "financial_psyche"), None
@@ -176,15 +179,16 @@ class Orchestrator:
         return {}
 
     async def handle_turn(self, phone: str, channel: str, message: str) -> TurnState:
-        bft = await self.bft.get_or_create_user(phone)
-        initial: TurnState = {
-            "phone": phone,
-            "channel": channel,
-            "message": message,
-            "bft": bft,
-            "observations": [],
-            "response": "",
-            "suggested_actions": [],
-            "state_update": None,
-        }
-        return await self._graph.ainvoke(initial)
+        with track_turn(channel):
+            bft = await self.bft.get_or_create_user(phone)
+            initial: TurnState = {
+                "phone": phone,
+                "channel": channel,
+                "message": message,
+                "bft": bft,
+                "observations": [],
+                "response": "",
+                "suggested_actions": [],
+                "state_update": None,
+            }
+            return await self._graph.ainvoke(initial)
