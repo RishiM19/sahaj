@@ -23,7 +23,7 @@ Every unchecked item below is also a tracked [GitHub issue](https://github.com/R
 - [x] Financial Life Simulation Engine (FLSE) — shares Cash Flow's 10,000-pass Monte Carlo engine directly, so the narrated story and the numeric warning can't drift apart
 - [x] Speech pipeline: faster-whisper (STT) + Piper-TTS (TTS), voice-first path for the Divya persona - `/api/voice/transcribe`, `/api/voice/speak`, `/api/voice/turn` (2 voices shipped: Hindi and English; growing toward the full 22 is separate, ongoing work)
 - [x] Document-assist pipeline (Kisan/Divya form-filling flow) - `/api/document/scan`, Tesseract instead of PaddleOCR (see docs/ARCHITECTURE.md), gated at PTP Level 4
-- [ ] Real WhatsApp Cloud API webhook (sandbox number) replacing the chat simulator
+- [x] WhatsApp Cloud API webhook code (`/api/whatsapp/webhook`) - real verification handshake and message send/receive against Meta's actual API, verified against the live Graph API (a deliberately invalid token got a real `OAuthException` back, proving the request shape is correct). What's *not* done: a Meta developer account, business verification, and a test phone number - manual sign-up steps at developers.facebook.com/apps that this code can't do on your behalf. Once you have `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, and `WHATSAPP_VERIFY_TOKEN` from that sandbox, drop them into `.env` and point Meta's webhook config at `https://<your-tunnel>/api/whatsapp/webhook` (ngrok or similar for local dev) - no code changes needed.
 - [ ] PTP levels 3–4 (UPI consent, DigiLocker-gated flows — against the mocked `GovIntegrations` interface)
 - [x] OpenSearch for full-text scheme/threat search
 

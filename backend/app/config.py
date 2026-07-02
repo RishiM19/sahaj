@@ -24,6 +24,15 @@ class Settings(BaseSettings):
     ollama_url: str = "http://localhost:11434"
     ollama_model: str = "phi3:mini"
 
+    # WhatsApp Cloud API - see docs/ARCHITECTURE.md ("What changed from the
+    # original design") for why Cloud API replaced the on-prem Business API
+    # spec, and docs/ROADMAP.md for the manual setup steps these can't
+    # automate (a Meta developer account and business verification).
+    whatsapp_api_version: str = "v20.0"
+    whatsapp_verify_token: str = ""
+    whatsapp_access_token: str = ""
+    whatsapp_phone_number_id: str = ""
+
 
 @lru_cache
 def get_settings() -> Settings:
