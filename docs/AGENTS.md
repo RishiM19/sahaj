@@ -12,7 +12,7 @@ All ten read from and write to the same shared blackboard, propagated with the c
 | **Crisis Intercept** | Steps in when the behavioral state hits `CRISIS`; surfaces a human handoff. | Phase 1 (detection only; routing to a real advisor is a Phase 2/3 fulfillment problem) |
 | **Community Intelligence** | Reads the CFTI signal pool for anything reported nearby, independent of what this user asked. | Phase 1 (single-node Postgres reads; genuine cross-device federation is Phase 3) |
 | **Learning & Literacy** | Explains a concept only at the moment it's relevant, in the user's own terms. | Phase 1 |
-| **Voice & Accessibility** | Handles speech in and out; the voice-only path end to end. | Phase 2 |
+| **Voice & Accessibility** | Handles speech in and out; the voice-only path end to end. | Phase 1 (STT/TTS channel infra live at `/api/voice/*`, backed by faster-whisper + Piper-TTS; not yet a blackboard agent in its own right - see `docs/ROADMAP.md`) |
 | **Document Assist** | Reads physical documents with OCR and fills forms field by field. | Phase 2 |
 
 ## Why a blackboard instead of a chain

@@ -16,9 +16,12 @@ _REGISTERED = {
 }
 
 _EXTRACTION_SYSTEM = (
-    "You extract the name of a loan app, lender, or scheme mentioned in a short message "
-    "from an Indian user. Reply with strict JSON: {\"entity\": \"<name or null>\"}. "
-    "If no specific lender/app/scheme is named, entity must be null."
+    "You extract the name of a LOAN APP or LENDER a message is asking about the safety, "
+    "legitimacy, or trustworthiness of - the kind of thing you'd check against a scam registry. "
+    "Reply with strict JSON: {\"entity\": \"<name or null>\"}. "
+    "entity MUST be null if: no specific lender/app is named, OR the message is about a "
+    "government scheme, tax section/deduction (e.g. 'Section 80DD'), benefit program, or "
+    "anything that is not a lender someone could borrow money from."
 )
 
 

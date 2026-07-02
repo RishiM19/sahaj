@@ -30,16 +30,21 @@ cd infra && docker compose up -d
 brew install ollama && brew services start ollama
 ollama pull phi3:mini   # one-time, ~2.4GB
 
-# 3. seed demo data (RBI registry, scam reports, scheme index)
+# 3. seed demo data - personas into Neo4j, schemes into Qdrant + OpenSearch
 cd ../backend && cp .env.example .env
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python -m app.seed
+python -m app.seed_schemes
+python -m app.seed_search
 
-# 4. run the backend
+# 4. optional - voices for the /api/voice/* speech pipeline (~120MB)
+python -m piper.download_voices --download-dir app/data/voices hi_IN-pratham-medium en_US-lessac-medium
+
+# 5. run the backend
 uvicorn app.main:app --reload --port 8000
 
-# 5. run the frontend (separate terminal)
+# 6. run the frontend (separate terminal)
 cd ../frontend && npm install && npm run dev
 ```
 

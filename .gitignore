@@ -24,6 +24,10 @@ dist-ssr/
 infra/data/
 infra/.ollama/
 
+# downloaded model weights (Piper voices, faster-whisper cache) - large binaries, re-downloadable
+backend/app/data/voices/*.onnx
+backend/app/data/voices/*.onnx.json
+
 # OS / editor
 .DS_Store
 .vscode/
